@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="constants.h" />
+    <ClInclude Include="device.cuh" />
+    <ClInclude Include="Algorithm.cuh" />
+    <ClInclude Include="Logger.cuh" />
+    <ClInclude Include="Sha256.cuh" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Logger.cu" />
+    <ClCompile Include="Sha256.cu" />
+  </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="device.cu" />
+    <CudaCompile Include="main.cu" />
+    <CudaCompile Include="EllipticalCurve.cuh" />
+    <CudaCompile Include="EllipticalCurve.cu" />
+    <CudaCompile Include="Algorithm.cu" />
+  </ItemGroup>
+</Project>

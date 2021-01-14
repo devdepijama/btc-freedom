@@ -1,0 +1,14 @@
+#ifndef H_CONSTANTS
+#define H_CONSTANTS
+
+#define CUDA_DEFAULT_DEVICE 0
+
+#define KILO_BYTES (1 << 10)
+#define MEGA_BYTES (KILO_BYTES << 10)
+#define GIGA_BYTES (MEGA_BYTES << 10)
+
+#define KERNEL_RESULT_BUFFER_SIZE (256 * MEGA_BYTES)
+#define KERNEL_BLOCKS 1
+#define KERNEL_THREADS 1
+
+#endif
