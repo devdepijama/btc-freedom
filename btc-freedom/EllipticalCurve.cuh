@@ -2,15 +2,16 @@
 #define H_ELLIPTICAL_CURVE
 
 #include <stdint.h>
-#include <secp256k1.h>
+#include "Logger.cuh"
 
 class EllipticalCurve
 {
 	private:
-		secp256k1_context* ctx;
+		Logger *logger;
+
 	public:
 		EllipticalCurve();
-		int calculatePublicKey(uint8_t* data, size_t len, uint8_t* output);
+		int calculatePublicKey(char *hexPrivateKey, char* hexPublicKey);
 		~EllipticalCurve();
 };
 
