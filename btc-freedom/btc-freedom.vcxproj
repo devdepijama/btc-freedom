@@ -85,12 +85,14 @@
   <ItemGroup>
     <CudaCompile Include="device.cu" />
     <CudaCompile Include="main.cu" />
+    <CudaCompile Include="Ripemd160.cu" />
     <CudaCompile Include="Utils.cu" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Algorithm.cuh" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="device.cuh" />
+    <ClInclude Include="Ripemd160.cuh" />
     <ClInclude Include="Utils.cuh" />
     <CudaCompile Include="EllipticalCurve.cuh" />
     <ClInclude Include="Logger.cuh" />

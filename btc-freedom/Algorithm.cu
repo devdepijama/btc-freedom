@@ -10,10 +10,7 @@
 #include <stdlib.h>
 #include "Utils.cuh"
 
-Algorithm::Algorithm(const Sha256 &hasher, const EllipticalCurve &ellipticalCurve) : 
-	hasher(hasher), 
-	ellipticalCurve(ellipticalCurve)
-{
+Algorithm::Algorithm() {
 	this->logger = new Logger("Algorithm", LOGGER_LEVEL_INFO);
 	this->kernelBuffer = nullptr;
 	this->kernelBufferSize = KERNEL_RESULT_BUFFER_SIZE;
@@ -51,7 +48,7 @@ void Algorithm::performAttack(unsigned int seed) {
 
 	// Calculate SHA256 of it:
 	uint8_t hash[SHA256_DIGEST_LENGTH];
-	this->hasher.hash(to_be_hashed, sizeof(to_be_hashed), hash);
+	Sha256::hash(to_be_hashed, sizeof(to_be_hashed), hash);
 
 	char hexPrivateKey[65];
 	Utils::bytes_to_hex(hash, sizeof(hash), hexPrivateKey, sizeof(hexPrivateKey));
@@ -59,8 +56,17 @@ void Algorithm::performAttack(unsigned int seed) {
 
 	// Calculate the secp256k1
 	char hexPublicKey[67];
-	this->ellipticalCurve.calculatePublicKey(hexPrivateKey, hexPublicKey);
+	EllipticalCurve::calculatePublicKey(hexPrivateKey, hexPublicKey);
 	this->logger->info("PublicKey - secp256k1(PrivateKey): %s", hexPublicKey);
+
+	// Convert hex to bytes
+	uint8_t bytesPublicKey[132];
+	Utils::hex_to_bytes(hexPublicKey, bytesPublicKey, sizeof(bytesPublicKey));
+	Sha256::hash(bytesPublicKey, sizeof(bytesPublicKey), hash);
+
+	char hexSHA256PubKey[65];
+	Utils::bytes_to_hex(hash, sizeof(hash), hexSHA256PubKey, sizeof(hexSHA256PubKey));
+	this->logger->info("SHA256(PublicKey): %s", hexSHA256PubKey);
 
 	//kernel <<< 1, 1>>> (this->kernelBuffer, this->kernelBufferSize);
 

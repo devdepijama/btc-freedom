@@ -7,10 +7,6 @@
 
 #define SECP256K1_PUB_KEY_STRING_SIZE 67
 
-EllipticalCurve::EllipticalCurve() {
-    this->logger = new Logger("EllipticalCurve", LOGGER_LEVEL_INFO);
-}
-
 int EllipticalCurve::calculatePublicKey(char* hexPrivateKey, char* hexPublicKey) {
     // Set things ups
     EC_KEY* ecKey = EC_KEY_new_by_curve_name(NID_secp256k1);
@@ -43,7 +39,4 @@ int EllipticalCurve::calculatePublicKey(char* hexPrivateKey, char* hexPublicKey)
     free(result);
 
 	return 0;
-}
-
-EllipticalCurve::~EllipticalCurve() {
 }

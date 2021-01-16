@@ -7,6 +7,7 @@
     <ClInclude Include="Logger.cuh" />
     <ClInclude Include="Sha256.cuh" />
     <ClInclude Include="Utils.cuh" />
+    <ClInclude Include="Ripemd160.cuh" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Logger.cu" />
@@ -19,5 +20,6 @@
     <CudaCompile Include="EllipticalCurve.cu" />
     <CudaCompile Include="Algorithm.cu" />
     <CudaCompile Include="Utils.cu" />
+    <CudaCompile Include="Ripemd160.cu" />
   </ItemGroup>
 </Project>
