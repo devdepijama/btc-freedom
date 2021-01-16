@@ -71,7 +71,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>secp256k1.lib;libcrypto.lib;libssl.lib;cudart_static.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>secp256k1.lib;libcrypto.lib;libssl.lib;cudart_static.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;Ws2_32.Lib;Wldap32.Lib;Crypt32.Lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:\Users\Hugo\projects\btc-freedom\btc-freedom\dependencies\secp256k1-zkp\lib;C:\Users\Hugo\projects\btc-freedom\btc-freedom\dependencies\openssl\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <CudaCompile>
@@ -85,11 +85,13 @@
   <ItemGroup>
     <CudaCompile Include="device.cu" />
     <CudaCompile Include="main.cu" />
+    <CudaCompile Include="Utils.cu" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Algorithm.cuh" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="device.cuh" />
+    <ClInclude Include="Utils.cuh" />
     <CudaCompile Include="EllipticalCurve.cuh" />
     <ClInclude Include="Logger.cuh" />
     <ClInclude Include="Sha256.cuh" />
