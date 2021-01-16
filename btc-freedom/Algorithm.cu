@@ -6,6 +6,10 @@
 #include "cuda_runtime.h"
 #include "device_launch_parameters.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+#include "Utils.cuh"
+
 Algorithm::Algorithm(const Sha256 &hasher, const EllipticalCurve &ellipticalCurve) : 
 	hasher(hasher), 
 	ellipticalCurve(ellipticalCurve)
@@ -39,7 +43,26 @@ void Algorithm::performAttack(unsigned int seed) {
 	const size_t totalThreads = this->kernelBlocks * this->kernelThreads;
 	this->logger->info("Invoking GPU Kernel with %d blocks and %d threads each. Total = %d", this->kernelBlocks, this->kernelThreads, totalThreads);
 
-	kernel <<< 1, 1>>> (this->kernelBuffer, this->kernelBufferSize);
+	// Print bytes that will work as seed:
+	char hexSeed[9];
+	uint8_t to_be_hashed[] = { 0x00, 0x00, 0x00, 0x01 };
+	Utils::bytes_to_hex(to_be_hashed, sizeof(to_be_hashed), hexSeed, sizeof(hexSeed));
+	this->logger->info("Seed: %s", hexSeed);
+
+	// Calculate SHA256 of it:
+	uint8_t hash[SHA256_DIGEST_LENGTH];
+	this->hasher.hash(to_be_hashed, sizeof(to_be_hashed), hash);
+
+	char hexPrivateKey[65];
+	Utils::bytes_to_hex(hash, sizeof(hash), hexPrivateKey, sizeof(hexPrivateKey));
+	this->logger->info("PrivateKey - SHA256(Seed): %s", hexPrivateKey);
+
+	// Calculate the secp256k1
+	char hexPublicKey[67];
+	this->ellipticalCurve.calculatePublicKey(hexPrivateKey, hexPublicKey);
+	this->logger->info("PublicKey - secp256k1(PrivateKey): %s", hexPublicKey);
+
+	//kernel <<< 1, 1>>> (this->kernelBuffer, this->kernelBufferSize);
 
 	cudaError_t rv = cudaDeviceSynchronize();
 	if (rv != cudaSuccess) {
