@@ -1,5 +1,6 @@
 #include "Logger.cuh"
 #include "Sha256.cuh"
+#include "Ripemd160.cuh"
 #include "EllipticalCurve.cuh"
 
 class Algorithm

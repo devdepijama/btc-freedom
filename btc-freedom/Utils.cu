@@ -10,7 +10,7 @@ static char nibble_to_char(uint8_t nibble) {
 }
 
 static uint8_t char_to_nibble(char character) {
-	if (('a' <= character) && (character <= 'f')) return character - 'a';
+	if (('a' <= character) && (character <= 'f')) return (character - 'a') + 10;
 	return character - '0';
 }
 
@@ -28,11 +28,10 @@ void Utils::bytes_to_hex(uint8_t* bytes, size_t bytes_len, char* hex, size_t hex
 
 void Utils::hex_to_bytes(char* hex, uint8_t* bytes, size_t bytes_len) {
 	size_t hex_len = strlen(hex);
-	if (bytes_len < (hex_len << 1)) return;
+	if (bytes_len < (hex_len >> 1)) return;
 
 	int j = 0;
-	for (int i = 0; i < hex_len; i++) {
-		bytes[j++] = char_to_nibble(hex[i] >> 4);
-		bytes[j++] = char_to_nibble(hex[i] & 0x0F);
+	for (int i = 0; i < hex_len;) {
+		bytes[j++] = ((char_to_nibble(hex[i++]) << 4) | char_to_nibble(hex[i++]));
 	}
 }
