@@ -19,8 +19,14 @@ void Utils::bytes_to_hex(uint8_t* bytes, size_t bytes_len, char* hex, size_t hex
 
 	int j = 0;
 	for (int i = 0; i < bytes_len; i++) {
-		hex[j++] = nibble_to_char(bytes[i] >> 4);
-		hex[j++] = nibble_to_char(bytes[i] & 0x0F);
+		uint8_t byte = bytes[i];
+		char char1 = nibble_to_char(byte >> 4);
+		char char2 = nibble_to_char(byte & 0x0F);
+
+		hex[j++] = char1;
+		hex[j++] = char2;
+
+		//printf("byte = 0x%02X | char1 = '%c' | char2 = '%c' \n", byte, char1, char2);
 	}
 
 	hex[j++] = '\0';
@@ -32,6 +38,11 @@ void Utils::hex_to_bytes(char* hex, uint8_t* bytes, size_t bytes_len) {
 
 	int j = 0;
 	for (int i = 0; i < hex_len;) {
-		bytes[j++] = ((char_to_nibble(hex[i++]) << 4) | char_to_nibble(hex[i++]));
+		uint8_t upper_nibble = (char_to_nibble(hex[i++]) << 4);
+		uint8_t lower_nibble = char_to_nibble(hex[i++]);
+		uint8_t byte = (upper_nibble | lower_nibble);
+		
+		//printf("un = 0x%02X | ln = 0x%02X | byte = 0x%02X \n", upper_nibble, lower_nibble, byte);
+		bytes[j++] = byte;
 	}
 }
