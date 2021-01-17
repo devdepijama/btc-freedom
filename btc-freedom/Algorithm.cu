@@ -88,6 +88,28 @@ void Algorithm::performAttack(unsigned int seed) {
 	Utils::bytes_to_hex(bytesWithMainNetworkAppended, sizeof(bytesWithMainNetworkAppended), hexWithMainNetworkAppended, sizeof(hexWithMainNetworkAppended));
 	this->logger->info("0x00 + RIPMD160(SHA256(PublicKey)): %s", hexWithMainNetworkAppended);
 
+	// Calculate SHA256 two times on the previous result
+	char hexDoubleSHA256[65];
+	uint8_t bytesDoubleSHA256[SHA256_DIGEST_LENGTH];
+
+	Sha256::hash(bytesWithMainNetworkAppended, sizeof(bytesWithMainNetworkAppended), bytesDoubleSHA256);
+	Utils::bytes_to_hex(bytesDoubleSHA256, sizeof(bytesDoubleSHA256), hexDoubleSHA256, sizeof(hexDoubleSHA256));
+	this->logger->info("SHA256(0x00 + RIPMD160(SHA256(PublicKey))): %s", hexDoubleSHA256);
+
+	Sha256::hash(bytesDoubleSHA256, sizeof(bytesDoubleSHA256), bytesDoubleSHA256);
+	Utils::bytes_to_hex(bytesDoubleSHA256, sizeof(bytesDoubleSHA256), hexDoubleSHA256, sizeof(hexDoubleSHA256));
+	this->logger->info("SHA256(SHA256(0x00 + RIPMD160(SHA256(PublicKey)))): %s", hexDoubleSHA256);
+
+	// Append previous hash to the end
+	uint8_t bytesResult[sizeof(bytesWithMainNetworkAppended) + 4];
+	char hexResult[(2 * sizeof(bytesResult)) + 1];
+
+	// Glue previous parts together
+	memcpy(bytesResult, bytesWithMainNetworkAppended, sizeof(bytesWithMainNetworkAppended));
+	memcpy(bytesResult + sizeof(bytesWithMainNetworkAppended), bytesDoubleSHA256, 4);
+	Utils::bytes_to_hex(bytesResult, sizeof(bytesResult), hexResult, sizeof(hexResult));
+	this->logger->info("Result before base58: %s", hexResult);
+
 	//kernel <<< 1, 1>>> (this->kernelBuffer, this->kernelBufferSize);
 
 	cudaError_t rv = cudaDeviceSynchronize();
