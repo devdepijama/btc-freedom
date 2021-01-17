@@ -83,6 +83,7 @@
     </CudaLink>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <CudaCompile Include="Base58.cu" />
     <CudaCompile Include="device.cu" />
     <CudaCompile Include="main.cu" />
     <CudaCompile Include="Ripemd160.cu" />
@@ -90,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Algorithm.cuh" />
+    <ClInclude Include="Base58.cuh" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="device.cuh" />
     <ClInclude Include="Ripemd160.cuh" />

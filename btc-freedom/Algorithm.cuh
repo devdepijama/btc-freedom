@@ -2,6 +2,7 @@
 #include "Sha256.cuh"
 #include "Ripemd160.cuh"
 #include "EllipticalCurve.cuh"
+#include "Base58.cuh"
 
 class Algorithm
 {

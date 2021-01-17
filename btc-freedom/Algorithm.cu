@@ -110,6 +110,9 @@ void Algorithm::performAttack(unsigned int seed) {
 	Utils::bytes_to_hex(bytesResult, sizeof(bytesResult), hexResult, sizeof(hexResult));
 	this->logger->info("Result before base58: %s", hexResult);
 
+	// Apply base58 to hexResult
+	this->logger->info("Public address: %s", Base58::cypher(hexResult).c_str());
+
 	//kernel <<< 1, 1>>> (this->kernelBuffer, this->kernelBufferSize);
 
 	cudaError_t rv = cudaDeviceSynchronize();
