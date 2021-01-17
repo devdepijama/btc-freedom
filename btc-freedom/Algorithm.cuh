@@ -1,13 +1,13 @@
 #include "Logger.cuh"
 #include "Sha256.cuh"
+#include "Ripemd160.cuh"
 #include "EllipticalCurve.cuh"
+#include "Base58.cuh"
 
 class Algorithm
 {
 private:
 	Logger *logger;
-	Sha256 hasher;
-	EllipticalCurve ellipticalCurve;
 	uint8_t* kernelBuffer;
 	size_t kernelBufferSize;
 	size_t kernelBlocks;
@@ -15,7 +15,7 @@ private:
 
 public:
 	void init();
-	Algorithm(const Sha256 &hasher, const EllipticalCurve &ellipticalCurve);
+	Algorithm();
 	void performAttack(unsigned int seed);
 
 	~Algorithm();
