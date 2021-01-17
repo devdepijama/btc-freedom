@@ -111,7 +111,7 @@ void Algorithm::performAttack(unsigned int seed) {
 	this->logger->info("Result before base58: %s", hexResult);
 
 	// Apply base58 to hexResult
-	this->logger->info("Public address: %s", Base58::cypher(hexResult).c_str());
+	this->logger->info("Summary: %s / %s", Base58::cypher(hexPrivateKey).c_str(), Base58::cypher(hexResult).c_str());
 
 	//kernel <<< 1, 1>>> (this->kernelBuffer, this->kernelBufferSize);
 
