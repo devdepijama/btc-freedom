@@ -16,7 +16,7 @@ private:
 public:
 	void init();
 	Algorithm();
-	void performAttack(unsigned int seed);
+	void performAttack(int seed);
 
 	~Algorithm();
 };
