@@ -35,7 +35,8 @@ void Algorithm::init() {
 	}
 }
 
-void Algorithm::performAttack(unsigned int seed) {
+void Algorithm::performAttack(int seed) {
+	this->logger->info("#############################################################");
 	this->logger->info("Performing attack...");
 	
 	const size_t totalThreads = this->kernelBlocks * this->kernelThreads;
@@ -43,7 +44,8 @@ void Algorithm::performAttack(unsigned int seed) {
 
 	// Print bytes that will work as seed:
 	char hexSeed[9];
-	uint8_t bytesSeed[] = { 0x00, 0x00, 0x00, 0x01 };
+	uint8_t bytesSeed[4];
+	memcpy(bytesSeed, &seed, sizeof(seed));
 	Utils::bytes_to_hex(bytesSeed, sizeof(bytesSeed), hexSeed, sizeof(hexSeed));
 	this->logger->info("Seed: %s", hexSeed);
 
@@ -113,6 +115,7 @@ void Algorithm::performAttack(unsigned int seed) {
 	// Result
 	this->logger->info("Private Key (Base58): %s ", Base58::cypher(hexPrivateKey).c_str());
 	this->logger->info("Address (Base58): %s ", Base58::cypher(hexResult).c_str());
+	this->logger->info("#############################################################");
 
 	//kernel <<< 1, 1>>> (this->kernelBuffer, this->kernelBufferSize);
 

@@ -4,9 +4,13 @@
 
 int main() {
     Algorithm algorithm = Algorithm();
+    int seed = 0;
     
     algorithm.init();
-    algorithm.performAttack(1);
+
+    do {
+        algorithm.performAttack(seed++);
+    } while (seed < 1000);
 
     return 0;
 }

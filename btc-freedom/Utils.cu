@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
+#include <openssl/bn.h>
 
 static char nibble_to_char(uint8_t nibble) {
 	return (nibble < 10) ? nibble + '0' : (nibble - 10) + 'a';
